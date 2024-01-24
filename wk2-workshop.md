@@ -3,36 +3,68 @@ wk2-workshop
 Shae-Anne
 2024-01-24
 
-- [R Markdown](#r-markdown)
-- [Including Plots](#including-plots)
+- [Read in data](#read-in-data)
+- [Statistics](#statistics)
+- [Plot: S&P Prices](#plot-sp-prices)
+- [Plot: S&P Yearly Returns](#plot-sp-yearly-returns)
 
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax
-for authoring HTML, PDF, and MS Word documents. For more details on
-using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that
-includes both content as well as the output of any embedded R code
-chunks within the document. You can embed an R code chunk like this:
+## Read in data
 
 ``` r
-summary(cars)
+df = readRDS("data/wk2_stocks.rds")
+head(df)
 ```
 
-    ##      speed           dist       
-    ##  Min.   : 4.0   Min.   :  2.00  
-    ##  1st Qu.:12.0   1st Qu.: 26.00  
-    ##  Median :15.0   Median : 36.00  
-    ##  Mean   :15.4   Mean   : 42.98  
-    ##  3rd Qu.:19.0   3rd Qu.: 56.00  
-    ##  Max.   :25.0   Max.   :120.00
+    ##   SPY_prices  SPY_returns  SPY_vol       date
+    ## 1   88.06087  0.048035622 88.06087 2001-01-03
+    ## 2   87.11300 -0.010763872 87.11300 2001-01-04
+    ## 3   84.26933 -0.032643418 84.26933 2001-01-05
+    ## 4   84.92164  0.007740723 84.92164 2001-01-08
+    ## 5   84.69744 -0.002640050 84.69744 2001-01-09
+    ## 6   86.18548  0.017568856 86.18548 2001-01-10
 
-## Including Plots
+## Statistics
 
-You can also embed plots, for example:
+- The cumulative returns of the S&P index during this period is 218.33%.
+- The average daily returns of the S&P index during this period is
+  0.04%.
+- The standard deviation of the daily returns of the S&P index during
+  this period is 1.22%.
 
-![](wk2-workshop_files/figure-gfm/pressure-1.png)<!-- -->
+## Plot: S&P Prices
 
-Note that the `echo = FALSE` parameter was added to the code chunk to
-prevent printing of the R code that generated the plot.
+``` r
+library(tidyverse)
+```
+
+    ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+    ## ✔ dplyr     1.1.1     ✔ readr     2.1.4
+    ## ✔ forcats   1.0.0     ✔ stringr   1.5.0
+    ## ✔ ggplot2   3.4.2     ✔ tibble    3.2.1
+    ## ✔ lubridate 1.9.2     ✔ tidyr     1.3.0
+    ## ✔ purrr     1.0.1     
+    ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+    ## ✖ dplyr::filter() masks stats::filter()
+    ## ✖ dplyr::lag()    masks stats::lag()
+    ## ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+
+``` r
+ggplot(data = df, aes(x = date, y = SPY_prices)) +
+  geom_line()
+```
+
+![](wk2-workshop_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
+
+## Plot: S&P Yearly Returns
+
+``` r
+df %>% 
+  mutate(year = year(date)) %>%
+  filter(year <= 2023) %>%
+  group_by(year) %>%
+  summarize(yr_returns = sum(SPY_returns)*100) %>%
+  ggplot(aes(x = year, y = yr_returns)) + 
+  geom_col()
+```
+
+![](wk2-workshop_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
