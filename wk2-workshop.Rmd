@@ -26,7 +26,7 @@ head(df)
 + The standard deviation of the daily returns of the S&P index during this period is `r round(sd(df$SPY_returns)*100,2)`%.
 
 ## Plot: S&P Prices
-```{r}
+```{r message = FALSE}
 library(tidyverse)
 ggplot(data = df, aes(x = date, y = SPY_prices)) +
   geom_line()
