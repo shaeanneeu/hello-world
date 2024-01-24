@@ -1,6 +1,6 @@
 ---
 title: "wk2-workshop"
-output: html_document
+output: github_document
 date: "2024-01-24"
 ---
 
