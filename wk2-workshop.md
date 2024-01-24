@@ -1,6 +1,10 @@
 wk2-workshop
 ================
+Shae-Anne
 2024-01-24
+
+- [R Markdown](#r-markdown)
+- [Including Plots](#including-plots)
 
 ## R Markdown
 

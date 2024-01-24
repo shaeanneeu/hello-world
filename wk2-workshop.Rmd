@@ -1,7 +1,13 @@
 ---
 title: "wk2-workshop"
-output: github_document
+author: "Shae-Anne"
 date: "2024-01-24"
+output:
+  github_document:
+    toc: true
+    toc_depth: 2
+    fig_width: 7
+    fig_height: 6
 ---
 
 ```{r setup, include=FALSE}
